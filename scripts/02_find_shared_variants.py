@@ -1,14 +1,3 @@
-"""Step 2: find variants that pass QC in all four populations.
-
-Intersects the per-population PLINK2 frequency files on CHROM + POS, so later
-steps (merge, PCA, FST) compare every population at the same sites. Also checks
-that no sample ID is assigned to more than one population.
-
-Inputs  (cwd = data/vcf): plink_output/<GENE>_<POP>_filtered_freq.afreq, ../panel/<POP>_samples.txt
-Outputs: shared_variants_output/<GENE>_shared_variants.csv
-         shared_variants_output/summary_shared_variant_counts.csv
-"""
-
 from pathlib import Path
 
 import pandas as pd
@@ -22,10 +11,6 @@ POPS = ["GIH", "PJL", "BEB", "ITU"]
 
 
 def load_freq_file(gene, pop, freq_dir=FREQ_DIR):
-    """Load one PLINK2 .afreq file and return its CHROM and POS columns, or None if missing.
-
-    Variant IDs were set to chr:pos:ref:alt in step 1, so POS is parsed from the ID.
-    """
     path = freq_dir / f"{gene}_{pop}_filtered_freq.afreq"
     if not path.exists():
         print(f"  WARNING: missing {path}")
@@ -38,7 +23,6 @@ def load_freq_file(gene, pop, freq_dir=FREQ_DIR):
 
 
 def intersect_sites(pop_dfs):
-    """Inner-join a list of CHROM/POS frames: sites present in every population."""
     shared = pop_dfs[0]
     for df in pop_dfs[1:]:
         shared = shared.merge(df, on=["CHROM", "POS"], how="inner")
@@ -81,7 +65,6 @@ def sample_overlaps(pop_samples):
 
 
 def check_sample_list_overlap():
-    """QC: each sample must belong to exactly one population, or it would be double-counted."""
     print("\n=== Sample list QC: checking for cross-population overlap ===\n")
     pop_samples = {}
     for pop in POPS:
