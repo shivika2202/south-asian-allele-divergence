@@ -1,5 +1,7 @@
 # Subpopulation Allele Frequency Divergence in South Asia
 
+[![tests](https://github.com/shivika2202/south-asian-allele-divergence/actions/workflows/tests.yml/badge.svg)](https://github.com/shivika2202/south-asian-allele-divergence/actions/workflows/tests.yml) ![Python 3.12](https://img.shields.io/badge/python-3.12-blue) ![PLINK 2](https://img.shields.io/badge/PLINK-2.0-purple) ![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
 A reproducible population genetics pipeline that tests whether the single "South Asian" ancestry label hides clinically relevant genetic differences between subpopulations. It compares four South Asian populations from the 1000 Genomes Project across three genes that matter for drug response and inherited blood disorders.
 
 Built by **Shivika Gupta** (University of Pennsylvania, Vagelos Program in Life Sciences & Management) as summer research in 2026, with support from LifeCell.
