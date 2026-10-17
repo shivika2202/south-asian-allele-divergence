@@ -82,14 +82,31 @@ PYTHON=.venv/bin/python bash run_pipeline.sh --plots    # needs the input VCFs i
 
 ## Input data
 
-The pipeline starts from 12 per-population VCFs (`<GENE>_<POP>.vcf.gz`) in `data/vcf/`. They are not committed; they were built from the 1000 Genomes Phase 3 chromosome VCFs (AWS S3 public mirror, `s3://1000genomes/release/20130502/`) with bcftools:
+The pipeline starts from 12 per-population VCFs in `data/vcf/` (`CYP2C19_GIH.vcf.gz`, `CYP2C19_PJL.vcf.gz`, ..., `G6PD_ITU.vcf.gz`). They are not committed, but these commands rebuild them from the public 1000 Genomes Phase 3 release on its AWS S3 mirror. bcftools streams only the needed regions, so nothing large is downloaded. Rebuilt this way, all 12 files match the originals record for record.
 
-1. Extract each gene region with a 5 kb flank (GRCh37): CYP2C19 `10:96517438-96620304`, HBB `11:5241694-5253301`, G6PD `X:153754605-153780784`.
-   `bcftools view -r <region> <chromosome VCF> -Oz -o <GENE>_region.vcf.gz`
-2. Split by population using the sample lists in [`data/panel/`](data/panel/), then index.
-   `bcftools view -S data/panel/<POP>_samples.txt <GENE>_region.vcf.gz -Oz -o <GENE>_<POP>.vcf.gz && tabix -p vcf <GENE>_<POP>.vcf.gz`
+Run from `data/vcf/`:
 
-Sample lists and [`data/sex_info.txt`](data/sex_info.txt) come from the 1000 Genomes sample panel (Phase 3 release).
+```bash
+BASE=https://1000genomes.s3.amazonaws.com/release/20130502
+
+# 1. Extract each gene region (GRCh37, 5 kb flank on each side)
+bcftools view -r 10:96517438-96620304 \
+  $BASE/ALL.chr10.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz -Oz -o CYP2C19_region.vcf.gz
+bcftools view -r 11:5241694-5253301 \
+  $BASE/ALL.chr11.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz -Oz -o HBB_region.vcf.gz
+bcftools view -r X:153754605-153780784 \
+  $BASE/ALL.chrX.phase3_shapeit2_mvncall_integrated_v1b.20130502.genotypes.vcf.gz -Oz -o G6PD_region.vcf.gz
+
+# 2. Split each region by population and index
+for GENE in CYP2C19 HBB G6PD; do
+  for POP in GIH PJL BEB ITU; do
+    bcftools view -S ../panel/${POP}_samples.txt ${GENE}_region.vcf.gz -Oz -o ${GENE}_${POP}.vcf.gz
+    tabix -p vcf ${GENE}_${POP}.vcf.gz
+  done
+done
+```
+
+Sample lists and [`data/sex_info.txt`](data/sex_info.txt) come from the 1000 Genomes Phase 3 sample panel.
 
 ## Layout
 
