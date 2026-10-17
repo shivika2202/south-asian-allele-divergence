@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.DS_Store
+.Rhistory
+
+# Genotype inputs and all pipeline outputs are regenerated locally (see README).
+data/vcf/*
+!data/vcf/.gitkeep

@@ -1,0 +1,11 @@
+CHROM,POS,rsID,Star_Allele,Gene,Function,Source
+10,96541616,rs4244285,CYP2C19*2,CYP2C19,Loss-of-function (clopidogrel poor metabolizer),ClinVar/PharmGKB
+10,96540410,rs4986893,CYP2C19*3,CYP2C19,Loss-of-function - rare (clopidogrel poor metabolizer),ClinVar/PharmGKB
+10,96521657,rs12248560,CYP2C19*17,CYP2C19,Gain-of-function (clopidogrel ultrarapid metabolizer),ClinVar/PharmGKB
+11,5248155,rs33915217,IVS1-5 (G>C),HBB,Splice-site - beta0/beta+ thalassemia,ClinVar/HbVar
+11,5248159,rs33971440,IVS1-1 (G>T),HBB,Splice-site - beta0 thalassemia,ClinVar/HbVar
+11,5247993,rs80356821,Codon 41/42 (-CTTT),HBB,Frameshift - beta0 thalassemia,ClinVar/HbVar
+11,5248173,rs33950507,HbE / Codon 26 (G>A),HBB,Missense - HbE variant (mild/beta-thal interaction),ClinVar/HbVar
+X,153762634,rs5030868,G6PD Mediterranean (c.563C>T),G6PD,Missense - severe deficiency (Class II),ClinVar/OMIM
+X,153764383,rs78478128,G6PD Orissa (c.131C>G),G6PD,Missense - moderate deficiency (Class III),ClinVar/OMIM
+X,153761259,rs137852339,G6PD Kerala-Kalyan (c.949G>A),G6PD,Missense - moderate deficiency (Class III),ClinVar/OMIM
